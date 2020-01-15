@@ -1,10 +1,7 @@
 {
-    "ramSize": 3840000,
     "cacheSize": 65536,
     "blockSize": 64,
-    "totalBlocks": 1024,
     "associativity": 2,
-    "setsCount": 512,
     "replacementPolicy": "LRU",
     "algorithm": "mxm_block",
     "blockingFactor": 32,
