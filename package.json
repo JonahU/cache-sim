@@ -1,0 +1,14 @@
+{
+  "name": "cache-sim",
+  "version": "0.0.1",
+  "description": "MPCS 52010 Project 1: Cache Emulator",
+  "main": "cache-sim.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Jonah Usadi <usadi@uchicago.edu>",
+  "license": "ISC",
+  "dependencies": {
+    "minimist": "^1.2.0"
+  }
+}
