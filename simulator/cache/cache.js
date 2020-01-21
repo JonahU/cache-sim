@@ -1,22 +1,25 @@
-const Set = require('./set');
+const Set = require("./set");
+const Address = require("../address");
 
 class Cache {
-    constructor(config) {
+    constructor(config, myRam) {
         const {
             setsCount: numSets,
             totalBlocks: numBlocks,
             blockSize,
-            cacheSize,
             associativity,
             replacementPolicy
         } = config;
         this.numSets = numSets;
         this.numBlocks = numBlocks;
+        this.replacementPolicy = replacementPolicy;
+        this.ram = myRam;
+        this.setSize = associativity * blockSize;
         this.sets = new Array(numSets);
         for(let index=0; index<numSets; index++) {
-            this.sets[index] = new Set(index, blockSize, associativity, numSets);
+            this.sets[index] = new Set(index, blockSize, associativity, replacementPolicy, numSets);
         }
-        this.replacementPolicy = replacementPolicy;
+        Object.seal(this.sets);
     }
 
     getDouble(address) {
@@ -24,6 +27,9 @@ class Cache {
     }
 
     setDouble(address, value) {
+        const setIndex = Address.toIndex(address, this.setSize);
+        const dataBlock = this.sets[setIndex].writeData(value);
+        this.ram.setBlock(address, dataBlock);
         // return void
     }
 

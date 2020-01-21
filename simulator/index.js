@@ -1,7 +1,12 @@
-const Cache = require('./cache');
+const Cache = require("./cache");
+const Cpu = require("./cpu");
+const Ram = require("./ram");
 
 const start = config => {
-    const myCache = new Cache(config);
+    const myRam = new Ram(config.ramSize)
+    const myCache = new Cache(config, myRam);
+    const myCpu = new Cpu(config, myCache);
+    myCpu.runAlgorithm();
 };
 
 module.exports = { start };

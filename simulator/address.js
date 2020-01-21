@@ -1,5 +1,3 @@
-const ADDRESS_SIZE = 64;
-
 class Address {
     constructor(setIndex, blockSize, numSets) {
         this.tag = 0;
@@ -9,12 +7,15 @@ class Address {
         this.numSets = numSets;
     }
 
-    get bits() {
+    get bits() { return this._bits(); };
+    get value() { return parseInt(this._bits(), 2); };
+
+    _bits() {
         return this._tagBits() + this._indexBits() + this._blockOffsetBits();
     }
 
     _tagBits() {
-        const numBits = ADDRESS_SIZE - Math.log2(this.numSets) - Math.log2(this.blockSize);
+        const numBits = SIZEOF_ADDRESS - Math.log2(this.numSets) - Math.log2(this.blockSize);
         let bits = this.tag.toString(2);
         while (bits.length != numBits) bits = "0" + bits;
         return bits;    
@@ -34,9 +35,9 @@ class Address {
         return bits;
     }
 
-    static fromMemory(memoryAddress, numBlocks) {
-        const cacheIndex = memoryAddress % 2^numBlocks;
-        // return address
+    static toIndex(address, setSize) {
+        const setIndex = Math.floor(address / setSize);
+        return setIndex;
     }
 
     getTag() {
