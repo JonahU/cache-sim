@@ -1,10 +1,11 @@
 const DataBlock = require("../data_block");
 
 class Ram {
-    constructor(size) {
-        this.size = size;
-        this.numBlocks = size / SIZEOF_DOUBLE;
-        this.data = []; // Object.seal(new Array(this.numBlocks).fill([])); // fill with zeroed array of blocksize? or maybe float64array?
+    constructor({ ramSize, blockSize }) {
+        this.size = ramSize;
+        this.blockSize = blockSize;
+        this.numBlocks = ramSize / SIZEOF_DOUBLE;
+        this.data = new DataBlock(this.numBlocks);
     }
 
     getBlock(address) {
@@ -12,7 +13,8 @@ class Ram {
     }
 
     setBlock(address, value) {
-        this.data[address] = value;
+        const toSet = value.subarray(0, 1);
+        this.data.set(toSet, address);
     }
 }
 

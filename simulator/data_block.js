@@ -1,7 +1,6 @@
-class DataBlock {
-    constructor(size, data = new Array(size)) {
-        this.size = size;
-        this.data = data;
+class DataBlock extends Float64Array {
+    toArray() {
+        return Array.from(this);
     }
 }
 

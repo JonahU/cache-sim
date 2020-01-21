@@ -21,10 +21,9 @@ class Cpu {
 
     daxpy() {
         for(let i=0; i<this.algorithmDimension; i++) {
-            const j = i*SIZEOF_DOUBLE;
-            this.storeDouble(j, i);
-            this.storeDouble(2*this.algorithmDimension+j, 2*i);
-            this.storeDouble(3*this.algorithmDimension+j, 0);
+            this.storeDouble(i, i);
+            this.storeDouble(this.algorithmDimension+i, 2*i);
+            this.storeDouble(2*this.algorithmDimension+i, 0);
         }
         // const register0 = 3;
         // for(let i=0; i<this.algorithmDimension; i++) {

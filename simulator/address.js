@@ -36,7 +36,9 @@ class Address {
     }
 
     static toIndex(address, setSize) {
-        const setIndex = Math.floor(address / setSize);
+        // TODO: fix this
+        const setIndex = Math.floor((address * SIZEOF_DOUBLE) / setSize);
+        // console.log(setIndex);
         return setIndex;
     }
 

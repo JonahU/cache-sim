@@ -21,7 +21,7 @@
                 "<node_internals>/**"
             ],
             "program": "${workspaceFolder}/cache-sim.js",
-            "args": ["-a", "daxpy"]
+            "args": ["-a", "daxpy", "-d", "100"]
         }
     ]
 }
