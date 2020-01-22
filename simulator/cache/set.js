@@ -13,7 +13,9 @@ class CacheSet {
 
     writeData(newData) {
         const replaceIndex = 0; // TODO: vary based on replacement policy
-        this.data[replaceIndex][0] = newData;
+        const newBlock = new DataBlock(this.blockSize/SIZEOF_DOUBLE);
+        newBlock[0] = newData
+        this.data[replaceIndex] = newBlock;
         return this.data[replaceIndex];
     }
 }

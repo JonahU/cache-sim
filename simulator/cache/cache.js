@@ -27,7 +27,7 @@ class Cache {
     }
 
     setDouble(address, value) {
-        const setIndex = Address.toIndex(address, this.setSize);
+        const setIndex = Address.toIndex(address, this.ram.numBlocks, this.numSets);
         const dataBlock = this.sets[setIndex].writeData(value);
         this.ram.setBlock(address, dataBlock);
         // return void

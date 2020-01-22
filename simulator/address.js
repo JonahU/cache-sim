@@ -1,5 +1,6 @@
 class Address {
     constructor(setIndex, blockSize, numSets) {
+        // TODO: constructor from value
         this.tag = 0;
         this.index = setIndex;
         this.blockOffset = 0;
@@ -35,10 +36,8 @@ class Address {
         return bits;
     }
 
-    static toIndex(address, setSize) {
-        // TODO: fix this
-        const setIndex = Math.floor((address * SIZEOF_DOUBLE) / setSize);
-        // console.log(setIndex);
+    static toIndex(address, numBlocksRam, numSetsCache) {
+        const setIndex = Math.floor((address / numBlocksRam) * numSetsCache);
         return setIndex;
     }
 
