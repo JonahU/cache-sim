@@ -40,10 +40,9 @@ const argv = () => {
     config.setsCount = config.totalBlocks / config.associativity;
     if(config.algorithm === "mxm" || config.algorithm === "mxm_block") {
         config.ramSize = (config.dimension*config.dimension)*SIZEOF_DOUBLE*3*100;
-    } else if (config.algorithm === "daxpy") { // daxpy
+    } else if (config.algorithm === "daxpy") {
         config.ramSize = config.dimension*SIZEOF_DOUBLE*3;
     }
-    // TODO: config.ramSize <- depends on algorithm
     Object.keys(argList).forEach(letter => {
         delete config[letter];
     });

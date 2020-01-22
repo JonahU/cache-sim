@@ -9,12 +9,12 @@ class Ram {
     }
 
     getBlock(address) {
-
+        return this.data[address.value];
     }
 
     setBlock(address, value) {
-        const toSet = value.subarray(0, 1);
-        this.data.set(toSet, address);
+        const dataFromBlock = value.subarray(0, 1);
+        this.data.set(dataFromBlock, address.value);
     }
 }
 

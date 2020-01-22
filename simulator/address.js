@@ -1,15 +1,20 @@
 class Address {
-    constructor(setIndex, blockSize, numSets) {
-        // TODO: constructor from value
-        this.tag = 0;
-        this.index = setIndex;
-        this.blockOffset = 0;
-        this.blockSize = blockSize;
-        this.numSets = numSets;
+    constructor(spec) {
+        if (typeof spec === "number") {
+            this.blockSize = null;
+            this.numSets = null;
+            this.value = spec;
+        } else {
+            this.tag = 0;
+            this.index = spec.index;
+            this.blockOffset = 0;
+            this.blockSize = spec.blockSize;
+            this.numSets = spec.numSets;
+            this.binary = this._bits();
+            this.value = parseInt(this._bits(), 2);
+            Object.freeze(this);
+        }
     }
-
-    get bits() { return this._bits(); };
-    get value() { return parseInt(this._bits(), 2); };
 
     _bits() {
         return this._tagBits() + this._indexBits() + this._blockOffsetBits();
@@ -36,16 +41,16 @@ class Address {
         return bits;
     }
 
-    static toIndex(address, numBlocksRam, numSetsCache) {
-        const setIndex = Math.floor((address / numBlocksRam) * numSetsCache);
-        return setIndex;
-    }
-
-    getTag() {
+    getTag(numSets) {
+        if(arguments.length === 0) return this.index;
+        const indexBinaryLength = Math.log2(numSets);
+        this.tag = this.value >> indexBinaryLength;
         return this.tag;
     }
 
-    getIndex() {
+    getIndex(numBlocksRam, numSetsCache) {
+        if(arguments.length === 0) return this.index;
+        this.index = Math.floor((this.value / numBlocksRam) * numSetsCache);
         return this.index;
     }
 
