@@ -27,6 +27,21 @@ class CacheSet {
         this.writeMisses = 0;
     }
 
+    get replaceIndex() {
+        if(this.associativity === 1) return 0;
+        switch(this.replacementPolicy) {
+            // TODO
+            case "LRU":
+                break;
+            case "FIFO":
+                break;
+            case "random":
+                return Math.floor(Math.random() * this.associativity);
+            default:
+                throw new Error(`Uknown replacement policy "${this.replacementPolicy}"`);
+        }
+    }
+
     readBlock(address) {
         const tag = address.getTag();
         for(let {address: currentAddress, block} of this.data) {
