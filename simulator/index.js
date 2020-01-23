@@ -7,6 +7,10 @@ const start = config => {
     const myCache = new Cache(config, myRam);
     const myCpu = new Cpu(config, myCache);
     myCpu.runAlgorithm();
+    return {
+        instructionCount: myCpu.instructionCount,
+        ...myCache.hitsAndMisses()
+    }
 };
 
 module.exports = { start };

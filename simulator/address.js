@@ -41,9 +41,9 @@ class Address {
         return bits;
     }
 
-    getTag(numSets) {
-        if(arguments.length === 0) return this.index;
-        const indexBinaryLength = Math.log2(numSets);
+    getTag(numSetsCache) {
+        if(arguments.length === 0) return this.tag;
+        const indexBinaryLength = Math.log2(numSetsCache);
         this.tag = this.value >> indexBinaryLength;
         return this.tag;
     }
@@ -51,6 +51,11 @@ class Address {
     getIndex(numBlocksRam, numSetsCache) {
         if(arguments.length === 0) return this.index;
         this.index = Math.floor((this.value / numBlocksRam) * numSetsCache);
+        if(this.tag === undefined || this.tag === null) {
+            const indexBinaryLength = Math.log2(numSetsCache);
+            this.tag = this.value >> indexBinaryLength;
+        }
+        this.numSets = numSetsCache;
         return this.index;
     }
 

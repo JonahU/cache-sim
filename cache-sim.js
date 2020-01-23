@@ -8,4 +8,6 @@ const config = argv();
 console.log("======INPUTS======");
 console.log(config);
 
-simulator.start(config);
+const results = simulator.start(config);
+console.log("======RESULTS======");
+console.log(results);

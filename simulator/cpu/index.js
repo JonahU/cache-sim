@@ -6,6 +6,7 @@ class Cpu {
         this.algorithm = config.algorithm;
         this.algorithmDimension = config.dimension;
         this.cache = myCache;
+        this.instructionCount = 0;
     }
     
     runAlgorithm() {
@@ -17,22 +18,29 @@ class Cpu {
             case "daxpy":
                 programs.daxpy(this);
                 break;
+            default:
+                throw new Error(`Unknown algorithm "${this.algorithm}"`);
         }
+        return 0;
     }
 
     loadDouble(address) {
+        this.instructionCount ++;
         return this.cache.getDouble(new Address(address));
     }
 
     storeDouble(address, value) {
+        this.instructionCount ++;
         this.cache.setDouble(new Address(address), value);
     }
 
     addDouble(value1, value2) {
+        this.instructionCount ++;
         return value1 + value2;
     }
 
     multDouble(value1, value2) {
+        this.instructionCount ++;
         return value1 * value2;
     }
 }

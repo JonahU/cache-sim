@@ -38,8 +38,25 @@ class Cache {
 
     setDouble(address, value) {
         const setIndex = address.getIndex(this.ram.numBlocks, this.numSets);
-        const dataBlock = this.sets[setIndex].writeData(value);
+        const dataBlock = this.sets[setIndex].writeData(address, value);
         this.ram.setBlock(address, dataBlock);
+    }
+
+    hitsAndMisses() {
+        const readHits = this.sets.reduce((accumulator, set) => accumulator + set.readHits, 0);
+        const readMisses = this.sets.reduce((accumulator, set) => accumulator + set.readMisses, 0);
+        const readTotal = readHits + readMisses;
+        const writeHits = this.sets.reduce((accumulator, set) => accumulator + set.writeHits, 0);
+        const writeMisses = this.sets.reduce((accumulator, set) => accumulator + set.writeMisses, 0);
+        const writeTotal = writeHits + writeMisses;
+        return {
+            readHits,
+            readMisses,
+            readMissRate: readMisses / readTotal,
+            writeHits,
+            writeMisses,
+            writeMissRate: writeMisses / writeTotal
+        };
     }
 }
 
