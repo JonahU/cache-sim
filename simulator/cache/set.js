@@ -27,12 +27,13 @@ class CacheSet {
         this.writeMisses = 0;
     }
 
-    getData(address) {
+    readData(address) {
         const tag = address.getTag(this.numSets);
         for(let {address: currentAddress, block} of this.data) {
             if(tag === currentAddress.tag) {
+                // HIT
                 this.readHits ++;
-                return block; // HIT
+                return block;
             }
         }
         
@@ -40,28 +41,23 @@ class CacheSet {
         this.readMisses ++;
         const newBlock = this.myRam.getBlock(address);
         const replaceIndex = 0; // TODO: vary based on replacement policy
-        this.data[replaceIndex] = {
-            address,
-            block: newBlock
-        };
-        return this.data[replaceIndex].block;
+        this.data[replaceIndex].valid = false;
+        return this.writeData(address, newBlock, replaceIndex);
     }
 
-    writeData(address, newData) {
-        const replaceIndex = 0; // TODO: vary based on replacement policy
-        const newBlock = new DataBlock(this.blockSize/SIZEOF_DOUBLE);
-        newBlock[0] = newData
+    writeData(address, newBlock, replaceIndex = 0) {
+        // const replaceIndex = 0; // TODO: vary replacement based on replacement policy
         if (this.data[replaceIndex].valid === true) {
             if(this.data[replaceIndex].address.getTag() === address.getTag()) {
                 // HIT
                 this.writeHits ++;
             } else {
-                // CONFLICT MISS
+                // MISS
                 this.writeMisses ++;
                 this.data[replaceIndex].address = address;
             }
         } else {
-            // COMPULSORY MISS
+            // MISS
             this.writeMisses ++;
             this.data[replaceIndex].address = address;
             this.data[replaceIndex].valid = true;

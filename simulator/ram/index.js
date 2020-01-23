@@ -9,7 +9,7 @@ class Ram {
     }
 
     getBlock(address) {
-        return this.data[address.value];
+        return this.data.subarray(address.value, address.value + this.blockSize/SIZEOF_DOUBLE); //TODO: block offset in ram
     }
 
     setBlock(address, value) {

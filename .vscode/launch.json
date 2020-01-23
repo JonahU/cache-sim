@@ -22,6 +22,16 @@
             ],
             "program": "${workspaceFolder}/cache-sim.js",
             "args": ["-a", "daxpy", "-d", "100", "-n", "1"]
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Small cache",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "program": "${workspaceFolder}/cache-sim.js",
+            "args": ["-a", "daxpy", "-d", "100", "-n", "1", "-c", "512"]
         }
     ]
 }
