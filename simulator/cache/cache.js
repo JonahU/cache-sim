@@ -34,7 +34,7 @@ class Cache {
     getDouble(address) {
         const setIndex = address.getIndex(this.ram.numBlocks, this.numSets, this.blockSize);
         const dataBlock = this.sets[setIndex].readBlock(address);
-        const blockOffset = address.getBlockOffset(this.blockSize);
+        const blockOffset = address.getBlockOffset();
         return dataBlock[blockOffset];
     }
 
