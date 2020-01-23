@@ -48,18 +48,24 @@ class Address {
         return this.tag;
     }
 
-    getIndex(numBlocksRam, numSetsCache) {
+    getIndex(numBlocksRam, numSetsCache, blockSize) {
         if(arguments.length === 0) return this.index;
-        this.index = Math.floor((this.value / numBlocksRam) * numSetsCache);
+        // TODO: no index bits in a fully associative cache
+        this.index = Math.floor((this.value / numBlocksRam) * numSetsCache); // TODO: FIX THIS to account for block offset
         if(this.tag === undefined || this.tag === null) {
-            const indexBinaryLength = Math.log2(numSetsCache);
-            this.tag = this.value >> indexBinaryLength;
+            this.tag = this.getTag(numSetsCache);
+        }
+        if(this.blockOffset === undefined || this.blockOffset === null) {
+            this.blockOffset = this.getBlockOffset(blockSize);
         }
         this.numSets = numSetsCache;
         return this.index;
     }
 
-    getOffset() {
+    getBlockOffset(blockSize) {
+        if(arguments.length === 0) return this.blockOffset;
+        this.blockSize = blockSize;
+        this.blockOffset = this.value % (blockSize / SIZEOF_DOUBLE);
         return this.blockOffset;
     }
 }

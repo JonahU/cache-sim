@@ -27,8 +27,8 @@ class CacheSet {
         this.writeMisses = 0;
     }
 
-    readData(address) {
-        const tag = address.getTag(this.numSets);
+    readBlock(address) {
+        const tag = address.getTag();
         for(let {address: currentAddress, block} of this.data) {
             if(tag === currentAddress.tag) {
                 // HIT
@@ -42,11 +42,21 @@ class CacheSet {
         const newBlock = this.myRam.getBlock(address);
         const replaceIndex = 0; // TODO: vary based on replacement policy
         this.data[replaceIndex].valid = false;
-        return this.writeData(address, newBlock, replaceIndex);
+        this.writeBlock(address, newBlock, replaceIndex);
+        return this.readBlock(address);
     }
 
-    writeData(address, newBlock, replaceIndex = 0) {
-        // const replaceIndex = 0; // TODO: vary replacement based on replacement policy
+    writeBlock(address, newBlock, replaceIndex) {
+        // MISS
+        this.writeMisses ++;
+        this.data[replaceIndex].address = address;
+        this.data[replaceIndex].valid = true;
+        this.data[replaceIndex].block = newBlock;
+        return this.data[replaceIndex].block;
+    }
+
+    updateBlock(address, newValue) {
+        const replaceIndex = 0; // TODO: vary replacement based on replacement policy
         if (this.data[replaceIndex].valid === true) {
             if(this.data[replaceIndex].address.getTag() === address.getTag()) {
                 // HIT
@@ -62,7 +72,8 @@ class CacheSet {
             this.data[replaceIndex].address = address;
             this.data[replaceIndex].valid = true;
         }
-        this.data[replaceIndex].block = newBlock;
+        const offset = address.getBlockOffset(this.blockSize);
+        this.data[replaceIndex].block[offset] = newValue;
         return this.data[replaceIndex].block;
     }
 }

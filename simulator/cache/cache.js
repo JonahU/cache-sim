@@ -32,17 +32,15 @@ class Cache {
     }
 
     getDouble(address) {
-        const setIndex = address.getIndex(this.ram.numBlocks, this.numSets);
-        const dataBlock = this.sets[setIndex].readData(address);
-        const blockOffset = 0; // TODO: placeholder
+        const setIndex = address.getIndex(this.ram.numBlocks, this.numSets, this.blockSize);
+        const dataBlock = this.sets[setIndex].readBlock(address);
+        const blockOffset = address.getBlockOffset(this.blockSize);
         return dataBlock[blockOffset];
     }
 
-    setDouble(address, newValue) {
-        const setIndex = address.getIndex(this.ram.numBlocks, this.numSets);
-        const newBlock = new DataBlock(this.blockSize/SIZEOF_DOUBLE);
-        newBlock[0] = newValue;
-        const dataBlock = this.sets[setIndex].writeData(address, newBlock);
+    setDouble(address, value) {
+        const setIndex = address.getIndex(this.ram.numBlocks, this.numSets, this.blockSize);
+        const dataBlock = this.sets[setIndex].updateBlock(address, value);
         this.ram.setBlock(address, dataBlock);
     }
 
