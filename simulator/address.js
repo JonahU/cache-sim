@@ -51,7 +51,7 @@ class Address {
     getIndex(numBlocksRam, numSetsCache, blockSize) {
         if(arguments.length === 0) return this.index;
         // TODO: no index bits in a fully associative cache
-        this.index = Math.floor((this.value / numBlocksRam) * numSetsCache); // TODO: FIX THIS to account for block offset
+        this.index = Math.floor((this.value / numBlocksRam) * numSetsCache);
         if(this.tag === undefined || this.tag === null) {
             this.tag = this.getTag(numSetsCache);
         }
