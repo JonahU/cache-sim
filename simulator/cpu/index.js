@@ -12,8 +12,10 @@ class Cpu {
     runAlgorithm() {
         switch(this.algorithm) {
             case "mxm":
+                programs.mxm(this);
                 break;
             case "mxm_block":
+                programs.mxm_block(this);
                 break;
             case "daxpy":
                 programs.daxpy(this);

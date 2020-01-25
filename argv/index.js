@@ -39,7 +39,7 @@ const argv = () => {
     config.totalBlocks = config.cacheSize / config.blockSize;
     config.setsCount = config.totalBlocks / config.associativity;
     if(config.algorithm === "mxm" || config.algorithm === "mxm_block") {
-        config.ramSize = (config.dimension*config.dimension)*SIZEOF_DOUBLE*3*100;
+        config.ramSize = (config.dimension*config.dimension)*SIZEOF_DOUBLE*3;
     } else if (config.algorithm === "daxpy") {
         config.ramSize = config.dimension*SIZEOF_DOUBLE*3;
     }
