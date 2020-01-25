@@ -5,6 +5,7 @@ class Cpu {
     constructor(config, myCache) {
         this.algorithm = config.algorithm;
         this.algorithmDimension = config.dimension;
+        this.blockingFactor = config.blockingFactor;
         this.cache = myCache;
         this.instructionCount = 0;
     }

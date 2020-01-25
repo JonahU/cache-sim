@@ -62,6 +62,16 @@
             ],
             "program": "${workspaceFolder}/cache-sim.js",
             "args": ["-a", "mxm", "-d", "3", "-n", "4", "-r", "random"]
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Simple mxm_block",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "program": "${workspaceFolder}/cache-sim.js",
+            "args": ["-d", "3", "-n", "4", "-r", "random", "-f", "3"]
         }
     ]
 }
