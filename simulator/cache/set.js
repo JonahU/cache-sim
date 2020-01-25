@@ -31,8 +31,8 @@ class CacheSet {
 
     readBlock(address) {
         const tag = address.getTag();
-        for(let {address: currentAddress, block} of this.data) {
-            if(tag === currentAddress.tag) {
+        for(let {address: currentAddress, block, valid} of this.data) {
+            if(tag === currentAddress.tag && valid) {
                 // HIT
                 this.readHits ++;
                 this.replacement.dataWillBeRead(address.tag);
@@ -45,8 +45,7 @@ class CacheSet {
         const newBlock = this.myRam.getBlock(address);
         const replaceIndex = this.replacement.dataWillBeWritten(address.tag);
         this.data[replaceIndex].valid = false;
-        this.writeBlock(address, newBlock, replaceIndex);
-        return this.readBlock(address);
+        return this.writeBlock(address, newBlock, replaceIndex);
     }
 
     writeBlock(address, newBlock, replaceIndex) {
@@ -57,27 +56,38 @@ class CacheSet {
     }
 
     updateBlock(address, newValue) {
-        const replaceIndex = this.replacement.dataWillBeWritten(address.tag);
+        let emptyBlock = null;
+        const tag = address.getTag();
         const offset = address.getBlockOffset();
-        if (this.data[replaceIndex].valid === true) {
-            if(this.data[replaceIndex].address.getTag() !== address.getTag()) {
-                // CONFLICT MISS
-                this.writeMisses++;
-                const replacementBlock = this.myRam.getBlock(address);
-                replacementBlock[offset] = newValue;
-                return this.writeBlock(address, replacementBlock, replaceIndex);
-            } else {
+        for(let i=0; i<this.data.length; i++) {
+            const {address: currentAddress, valid} = this.data[i];
+            if(tag === currentAddress.tag && valid) {
                 // HIT
                 this.writeHits ++;
+                this.data[i].block[offset] = newValue;
+                return this.data[i].block;
+            } else if (!valid) {
+                emptyBlock = i;
+                break;
             }
-        } else {
-            // COMPULSORY MISS
-            this.writeMisses ++;
-            this.data[replaceIndex].address = address;
-            this.data[replaceIndex].valid = true;
         }
-        this.data[replaceIndex].block[offset] = newValue;
-        return this.data[replaceIndex].block;
+
+        // COMPULSORY MISS
+        if (emptyBlock) {
+            this.replacement.dataWillBeWritten(address.tag, emptyBlock);
+            this.writeMisses ++;
+            this.data[emptyBlock].address = address;
+            this.data[emptyBlock].valid = true;
+            this.data[emptyBlock].block[offset] = newValue;
+            return this.data[emptyBlock].block;
+        }
+
+        // CONFLICT MISS
+        const replaceIndex = this.replacement.dataWillBeWritten(address.tag);
+        this.writeMisses++;
+        const replacementBlock = this.myRam.getBlock(address);
+        replacementBlock[offset] = newValue;
+        return this.writeBlock(address, replacementBlock, replaceIndex);
     }
 }
 

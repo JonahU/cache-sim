@@ -1,5 +1,4 @@
 const Set = require("./set");
-const DataBlock = require("../data_block");
 
 class Cache {
     constructor(config, myRam) {

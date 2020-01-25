@@ -68,9 +68,14 @@ LRUCache.prototype.remove = function(node) {
         this.firstIn = 0;
     }
 
-    put(index) {
+    put(tag, replaceIndex) {
+        if(replaceIndex) {
+            this.queue[replaceIndex] = tag;
+            this.firstIn++;
+            return replaceIndex;
+        }
         const currentFirstIn = this.firstIn;
-        this.queue[currentFirstIn] = index;
+        this.queue[currentFirstIn] = tag;
         if(this.firstIn === this.queue.length-1) {
             this.firstIn = -1;
         }
@@ -108,13 +113,13 @@ LRUCache.prototype.remove = function(node) {
         }
     }
 
-    dataWillBeWritten(tag) {
+    dataWillBeWritten(tag, replaceIndex) {
         if (this.associativity === 1) return 0;
         switch(this.policy) {
             case "LRU":
                 return this.LRU.put(tag);
             case "FIFO":
-                return this.FIFO.put(tag)
+                return this.FIFO.put(tag, replaceIndex)
             case "random":
                 return random(this.associativity);
         }
