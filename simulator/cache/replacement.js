@@ -38,9 +38,10 @@ LRUCache.prototype.put = function(key, value) {
             
         }
         const newNode = new Node(key, value);
+        const currentCount = this.nodeCount;
         this.add(newNode);
         this.LRUTable[key] = newNode;
-        return -1;
+        return currentCount;
     }
 };
 
@@ -101,19 +102,19 @@ LRUCache.prototype.remove = function(node) {
         }
     }
 
-    dataWillBeRead(setIndex) {
+    dataWillBeRead(tag) {
         if(this.policy === "LRU") {
-            this.LRU.get(setIndex);
+            this.LRU.get(tag);
         }
     }
 
-    dataWillBeWritten(setIndex) {
+    dataWillBeWritten(tag) {
         if (this.associativity === 1) return 0;
         switch(this.policy) {
             case "LRU":
-                return this.LRU.put(setIndex);
+                return this.LRU.put(tag);
             case "FIFO":
-                return this.FIFO.put(setIndex)
+                return this.FIFO.put(tag)
             case "random":
                 return random(this.associativity);
         }

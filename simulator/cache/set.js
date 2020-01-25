@@ -35,7 +35,7 @@ class CacheSet {
             if(tag === currentAddress.tag) {
                 // HIT
                 this.readHits ++;
-                this.replacement.dataWillBeRead(address.index);
+                this.replacement.dataWillBeRead(address.tag);
                 return block;
             }
         }
@@ -43,7 +43,7 @@ class CacheSet {
         // MISS
         this.readMisses ++;
         const newBlock = this.myRam.getBlock(address);
-        const replaceIndex = this.replacement.dataWillBeWritten(address.index);
+        const replaceIndex = this.replacement.dataWillBeWritten(address.tag);
         this.data[replaceIndex].valid = false;
         this.writeBlock(address, newBlock, replaceIndex);
         return this.readBlock(address);
@@ -57,7 +57,7 @@ class CacheSet {
     }
 
     updateBlock(address, newValue) {
-        const replaceIndex = this.replacement.dataWillBeWritten(address.index);
+        const replaceIndex = this.replacement.dataWillBeWritten(address.tag);
         const offset = address.getBlockOffset();
         if (this.data[replaceIndex].valid === true) {
             if(this.data[replaceIndex].address.getTag() !== address.getTag()) {
