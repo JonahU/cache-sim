@@ -1,5 +1,6 @@
 const Address = require("../address");
 const DataBlock = require("../data_block");
+const Replacement = require("./replacement");
 
 class CacheSet {
     constructor(
@@ -16,9 +17,10 @@ class CacheSet {
         this.data = Object.seal(new Array(associativity).fill({
             address: new Address({index, blockSize, numSets}),
             block: new DataBlock(blockSize/SIZEOF_DOUBLE),
-            valid: false
+            valid: false,
         }));
         this.replacementPolicy = replacementPolicy;
+        this.replacement = new Replacement(associativity, replacementPolicy);
         this.numSets = numSets;
         this.myRam = myRam;
         this.readHits = 0;
@@ -27,27 +29,13 @@ class CacheSet {
         this.writeMisses = 0;
     }
 
-    get replaceIndex() {
-        if(this.associativity === 1) return 0;
-        switch(this.replacementPolicy) {
-            // TODO
-            case "LRU":
-                break;
-            case "FIFO":
-                break;
-            case "random":
-                return Math.floor(Math.random() * this.associativity);
-            default:
-                throw new Error(`Uknown replacement policy "${this.replacementPolicy}"`);
-        }
-    }
-
     readBlock(address) {
         const tag = address.getTag();
         for(let {address: currentAddress, block} of this.data) {
             if(tag === currentAddress.tag) {
                 // HIT
                 this.readHits ++;
+                this.replacement.dataWillBeRead(address.index);
                 return block;
             }
         }
@@ -55,7 +43,7 @@ class CacheSet {
         // MISS
         this.readMisses ++;
         const newBlock = this.myRam.getBlock(address);
-        const replaceIndex = 0; // TODO: vary based on replacement policy
+        const replaceIndex = this.replacement.dataWillBeWritten(address.index);
         this.data[replaceIndex].valid = false;
         this.writeBlock(address, newBlock, replaceIndex);
         return this.readBlock(address);
@@ -69,7 +57,7 @@ class CacheSet {
     }
 
     updateBlock(address, newValue) {
-        const replaceIndex = 0; // TODO: vary replacement based on replacement policy
+        const replaceIndex = this.replacement.dataWillBeWritten(address.index);
         const offset = address.getBlockOffset();
         if (this.data[replaceIndex].valid === true) {
             if(this.data[replaceIndex].address.getTag() !== address.getTag()) {
