@@ -39,8 +39,7 @@ class Cache {
 
     setDouble(address, value) {
         const setIndex = address.getIndex(this.ram.numBlocks, this.numSets, this.blockSize);
-        const dataBlock = this.sets[setIndex].updateBlock(address, value);
-        this.ram.setBlock(address, dataBlock);
+        this.sets[setIndex].updateBlock(address, value);
     }
 
     hitsAndMisses() {

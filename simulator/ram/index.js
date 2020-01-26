@@ -18,6 +18,10 @@ class Ram {
         const dataFromBlock = value.subarray(address.blockOffset, address.blockOffset+1);
         this.data.set(dataFromBlock, address.value);
     }
+
+    setDouble(address, value) {
+        this.data[address.value] = value;
+    }
 }
 
 module.exports = Ram;

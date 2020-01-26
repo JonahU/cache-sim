@@ -2,11 +2,12 @@ const Address = require("../address");
 const programs = require("./programs");
 
 class Cpu {
-    constructor(config, myCache) {
+    constructor(config, myCache, myRam) {
         this.algorithm = config.algorithm;
         this.algorithmDimension = config.dimension;
         this.blockingFactor = config.blockingFactor;
         this.cache = myCache;
+        this.ram = myRam;
         this.instructionCount = 0;
     }
     
@@ -34,7 +35,9 @@ class Cpu {
 
     storeDouble(address, value) {
         this.instructionCount ++;
-        this.cache.setDouble(new Address(address), value);
+        const newAddress = new Address(address);
+        this.cache.setDouble(newAddress, value);
+        this.ram.setDouble(newAddress, value);
     }
 
     addDouble(value1, value2) {
