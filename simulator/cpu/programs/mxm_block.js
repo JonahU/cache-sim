@@ -1,4 +1,4 @@
-const mxm_block = myCpu => {
+const run = myCpu => {
     const { algorithmDimension: dimension, blockingFactor } = myCpu;
     for(let i = 0; i<dimension; i++) {
         for(let j = 0; j<dimension; j++) {
@@ -31,4 +31,15 @@ const mxm_block = myCpu => {
     }
 };
 
-module.exports = mxm_block;
+const printSolution = myCpu => {
+    const dimension = myCpu.algorithmDimension;
+    for(let i = 0; i<dimension; i++) {
+        for(let j = 0; j<dimension; j++) {
+            const val = i*dimension+j;
+            const register1 = myCpu.loadDouble(2*Math.pow(dimension,2)+val);
+            console.log(register1);
+        }
+    }
+}
+
+module.exports = { run, printSolution };

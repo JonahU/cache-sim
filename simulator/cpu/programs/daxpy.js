@@ -1,4 +1,4 @@
-const daxpy = myCpu => {
+const run = myCpu => {
     for(let i=0; i<myCpu.algorithmDimension; i++) {
         myCpu.storeDouble(i, i);
         myCpu.storeDouble(myCpu.algorithmDimension+i, 2*i);
@@ -14,4 +14,11 @@ const daxpy = myCpu => {
     }
 };
 
-module.exports = daxpy;
+const printSolution = myCpu => {
+    for(let i=0; i<myCpu.algorithmDimension; i++) {
+        const register1 = myCpu.loadDouble(2*myCpu.algorithmDimension+i);
+        console.log(register1);
+    }
+}
+
+module.exports = { run, printSolution };

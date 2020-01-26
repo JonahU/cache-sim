@@ -8,6 +8,11 @@ const config = argv();
 console.log("======INPUTS======");
 console.log(config);
 
-const results = simulator.start(config);
+const cache_sim = simulator(config);
+const results = cache_sim.start();
 console.log("======RESULTS======");
 console.log(results);
+
+if(config.printSolution) {
+    cache_sim.printSolution()
+}

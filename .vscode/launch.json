@@ -61,7 +61,7 @@
                 "<node_internals>/**"
             ],
             "program": "${workspaceFolder}/cache-sim.js",
-            "args": ["-a", "mxm", "-d", "3", "-n", "4", "-r", "random"]
+            "args": ["-a", "mxm", "-d", "3", "-n", "4", "-r", "random", "-p"]
         },
         {
             "type": "node",

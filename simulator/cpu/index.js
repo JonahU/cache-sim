@@ -14,18 +14,34 @@ class Cpu {
     runAlgorithm() {
         switch(this.algorithm) {
             case "mxm":
-                programs.mxm(this);
+                programs.mxm.run(this);
                 break;
             case "mxm_block":
-                programs.mxm_block(this);
+                programs.mxm_block.run(this);
                 break;
             case "daxpy":
-                programs.daxpy(this);
+                programs.daxpy.run(this);
                 break;
             default:
                 throw new Error(`Unknown algorithm "${this.algorithm}"`);
         }
         return 0;
+    }
+
+    printSolution() {
+        switch(this.algorithm) {
+            case "mxm":
+                programs.mxm.printSolution(this);
+                break;
+            case "mxm_block":
+                programs.mxm_block.printSolution(this);
+                break;
+            case "daxpy":
+                programs.daxpy.printSolution(this);
+                break;
+            default:
+                throw new Error(`Unknown algorithm "${this.algorithm}"`);
+        }
     }
 
     loadDouble(address) {
