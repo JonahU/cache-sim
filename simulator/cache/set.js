@@ -73,13 +73,15 @@ class CacheSet {
         }
 
         // COMPULSORY MISS
-        if (emptyBlock) {
-            this.replacement.dataWillBeWritten(address.tag, emptyBlock);
+        if (emptyBlock !== null) {
+            const blockToWriteTo = emptyBlock;
+            this.replacement.dataWillBeWritten(address.tag, blockToWriteTo);
             this.writeMisses ++;
-            this.data[emptyBlock].address = address;
-            this.data[emptyBlock].valid = true;
-            this.data[emptyBlock].block[offset] = newValue;
-            return this.data[emptyBlock].block;
+            this.data[blockToWriteTo].address = address;
+            this.data[blockToWriteTo].valid = true;
+            this.data[blockToWriteTo].block[offset] = newValue;
+            emptyBlock = null;
+            return this.data[blockToWriteTo].block;
         }
 
         // CONFLICT MISS

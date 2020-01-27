@@ -72,6 +72,16 @@
             ],
             "program": "${workspaceFolder}/cache-sim.js",
             "args": ["-d", "3", "-n", "4", "-r", "random", "-f", "3"]
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Daxy fail",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "program": "${workspaceFolder}/cache-sim.js",
+            "args": ["-a", "daxpy", "-r", "FIFO", "-d", "10", "-n", "64"]
         }
     ]
 }
