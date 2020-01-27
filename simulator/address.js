@@ -33,6 +33,7 @@ class Address {
 
     _indexBits() {
         const numBits = Math.log2(this.numSets);
+        if(numBits === 0) return "";
         let bits = this.index.toString(2);
         while (bits.length != numBits) bits = "0" + bits;
         return bits;
