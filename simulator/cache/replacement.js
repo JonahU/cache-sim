@@ -22,19 +22,18 @@ LRUCache.prototype.get = function(key) {
     this.add(toReturn);
 };
 
-LRUCache.prototype.put = function(key, value) {
+LRUCache.prototype.put = function(key) {
+    const value = key;
     const node = this.LRUTable[key];
     if(node) {
-        this.remove(node);
-        node.value = value;
+        const removed = this.remove(node);
         this.add(node);
-        return -1;
+        return removed;
     } else {
         if (this.nodeCount === this.capacity) {
-            const oldKey = this.tail.previous.key;
-            this.remove(this.tail.previous);
-            delete this.LRUTable[oldKey];
-            return oldKey;
+            const removed = this.remove(this.tail.previous);
+            delete this.LRUTable[removed];
+            return removed;
             
         }
         const newNode = new Node(key, value);
@@ -55,11 +54,13 @@ LRUCache.prototype.add = function(node) {
 }
 
 LRUCache.prototype.remove = function(node) {
+    const removed = node.value;
     const next_node = node.next;
     const prev_node = node.previous;
     next_node.previous = prev_node;
     prev_node.next = next_node;
     this.nodeCount --;
+    return removed;
 }
 
  class FIFO {
@@ -103,7 +104,7 @@ LRUCache.prototype.remove = function(node) {
                 // No initialisation required
                 break;
             default:
-                throw new Error(`Unknown replacement policy "${this.replacementPolicy}"`);
+                throw new Error(`Unknown replacement policy "${policy}"`);
         }
     }
 
@@ -122,6 +123,7 @@ LRUCache.prototype.remove = function(node) {
             case "FIFO":
                 return this.FIFO.put(tag, replaceIndex)
             case "random":
+                if(replaceIndex) return replaceIndex;
                 return random(this.associativity);
         }
     }

@@ -9,7 +9,8 @@ const argList = {
     a: "algorithm",
     d: "dimension",
     p: "printSolution",
-    f: "blockingFactor"
+    f: "blockingFactor",
+    h: "help"
 };
 
 const configSchema = {
@@ -30,10 +31,16 @@ const argv = () => {
     const args = minimist(process.argv.slice(2), {
         alias: argList,
         string: ["a", "r"],
-        boolean: ["p"],
+        boolean: ["p", "h"],
         unknown: () => false
     });
     delete args._;
+
+    if(args.h) {
+        console.log("======ARGS LIST======");
+        console.log(argList);
+        process.exit(0);
+    }
 
     const config = { ...configSchema, ...configFile, ...args };
     config.totalBlocks = config.cacheSize / config.blockSize;
@@ -45,7 +52,7 @@ const argv = () => {
     } else {
         throw new Error(`Unknown algorithm: "${config.algorithm}"`);
     }
-    if(config.associativity < 1 || !Number.isInteger(args.associativity))
+    if(config.associativity < 1 || !Number.isInteger(config.associativity))
         throw new Error("Associativity must be more than 0");
     if(!Object.is(config.blockSize%SIZEOF_DOUBLE, +0))
         throw new Error("Block size must be a factor of 8");
@@ -55,6 +62,7 @@ const argv = () => {
     Object.keys(argList).forEach(letter => {
         delete config[letter];
     });
+    delete config["help"];
     return config;
 };
 

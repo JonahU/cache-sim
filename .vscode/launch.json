@@ -86,12 +86,42 @@
         {
             "type": "node",
             "request": "launch",
-            "name": "Daxy fail",
+            "name": "Daxy small FIFO",
             "skipFiles": [
                 "<node_internals>/**"
             ],
             "program": "${workspaceFolder}/cache-sim.js",
-            "args": ["-a", "daxpy", "-r", "FIFO", "-d", "5", "-n", "1", "-c", "32", "-b", "8", "-p"]
+            "args": ["-a", "daxpy", "-r", "FIFO", "-d", "5", "-n", "4", "-c", "256", "-b", "16", "-p"]
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Daxy small random",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "program": "${workspaceFolder}/cache-sim.js",
+            "args": ["-a", "daxpy", "-r", "random", "-d", "5", "-n", "4", "-c", "256", "-b", "16", "-p"]
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Daxy small LRU",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "program": "${workspaceFolder}/cache-sim.js",
+            "args": ["-a", "daxpy", "-r", "LRU", "-d", "5", "-n", "4", "-c", "256", "-b", "16", "-p"]
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "DAXPY default",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "program": "${workspaceFolder}/cache-sim.js",
+            "args": ["-a", "daxpy"]
         }
     ]
 }
