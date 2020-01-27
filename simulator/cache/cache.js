@@ -31,14 +31,14 @@ class Cache {
     }
 
     getDouble(address) {
-        const setIndex = address.getIndex(this.ram.numBlocks, this.numSets, this.blockSize);
+        const setIndex = address.getIndex(this.numSets, this.blockSize);
         const dataBlock = this.sets[setIndex].readBlock(address);
         const blockOffset = address.getBlockOffset();
         return dataBlock[blockOffset];
     }
 
     setDouble(address, value) {
-        const setIndex = address.getIndex(this.ram.numBlocks, this.numSets, this.blockSize);
+        const setIndex = address.getIndex(this.numSets, this.blockSize);
         this.sets[setIndex].updateBlock(address, value);
     }
 

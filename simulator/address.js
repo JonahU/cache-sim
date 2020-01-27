@@ -46,24 +46,25 @@ class Address {
         return bits;
     }
 
-    getTag(numSetsCache, blockSize) {
+    getTag(numSetsCache) {
         if(arguments.length === 0) return this.tag;
         const indexBinaryLength = Math.log2(numSetsCache);
         this.tag = this.value >> indexBinaryLength;
         return this.tag;
     }
 
-    getIndex(numBlocksRam, numSetsCache, blockSize) {
+    getIndex(numSetsCache, blockSize) {
         if(arguments.length === 0) return this.index;
         this.numSets = numSetsCache;
         this.blockSize = blockSize;
-        // TODO: no index bits in a fully associative cache
-        this.index = Math.floor((this.value / numBlocksRam) * numSetsCache);
+        this.index = this.value % numSetsCache;
+
+        // set offset and tag if not set yet
         if(this.blockOffset === undefined || this.blockOffset === null) {
             this.blockOffset = this.getBlockOffset(blockSize);
         }
         if(this.tag === undefined || this.tag === null) {
-            this.tag = this.getTag(numSetsCache, blockSize);
+            this.tag = this.getTag(numSetsCache);
         }
         this.numSets = numSetsCache;
         return this.index;

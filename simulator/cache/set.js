@@ -15,7 +15,7 @@ class CacheSet {
         this.blockSize = blockSize;
         this.associativity = associativity;
         this.data = Object.seal(new Array(associativity).fill({
-            address: new Address({index, blockSize, numSets}),
+            address: new Address({index, blockSize, numSets}), // dummy address
             block: new DataBlock(blockSize/SIZEOF_DOUBLE),
             valid: false,
         }));

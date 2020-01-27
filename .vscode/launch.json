@@ -76,12 +76,22 @@
         {
             "type": "node",
             "request": "launch",
+            "name": "Daxy fully associative",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "program": "${workspaceFolder}/cache-sim.js",
+            "args": ["-a", "daxpy", "-r", "random", "-d", "10", "-n", "4", "-c", "64", "-b", "16", "-p"]
+        },
+        {
+            "type": "node",
+            "request": "launch",
             "name": "Daxy fail",
             "skipFiles": [
                 "<node_internals>/**"
             ],
             "program": "${workspaceFolder}/cache-sim.js",
-            "args": ["-a", "daxpy", "-r", "FIFO", "-d", "10", "-n", "4", "-c", "32", "-b", "8", "-p"]
+            "args": ["-a", "daxpy", "-r", "FIFO", "-d", "5", "-n", "1", "-c", "32", "-b", "8", "-p"]
         }
     ]
 }
