@@ -11,9 +11,13 @@ class Address {
             this.blockSize = spec.blockSize;
             this.numSets = spec.numSets;
             this.binary = this._bits();
-            this.value = parseInt(this._bits(), 2);
+            this.value = this._value();
             Object.freeze(this);
         }
+    }
+
+    _value() {
+        return parseInt(this._bits(), 2);
     }
 
     _bits() {
@@ -41,7 +45,7 @@ class Address {
         return bits;
     }
 
-    getTag(numSetsCache) {
+    getTag(numSetsCache, blockSize) {
         if(arguments.length === 0) return this.tag;
         const indexBinaryLength = Math.log2(numSetsCache);
         this.tag = this.value >> indexBinaryLength;
@@ -50,13 +54,15 @@ class Address {
 
     getIndex(numBlocksRam, numSetsCache, blockSize) {
         if(arguments.length === 0) return this.index;
+        this.numSets = numSetsCache;
+        this.blockSize = blockSize;
         // TODO: no index bits in a fully associative cache
         this.index = Math.floor((this.value / numBlocksRam) * numSetsCache);
-        if(this.tag === undefined || this.tag === null) {
-            this.tag = this.getTag(numSetsCache);
-        }
         if(this.blockOffset === undefined || this.blockOffset === null) {
             this.blockOffset = this.getBlockOffset(blockSize);
+        }
+        if(this.tag === undefined || this.tag === null) {
+            this.tag = this.getTag(numSetsCache, blockSize);
         }
         this.numSets = numSetsCache;
         return this.index;

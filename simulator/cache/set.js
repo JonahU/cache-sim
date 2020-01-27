@@ -51,7 +51,7 @@ class CacheSet {
     writeBlock(address, newBlock, replaceIndex) {
         this.data[replaceIndex].address = address;
         this.data[replaceIndex].valid = true;
-        this.data[replaceIndex].block = newBlock;
+        this.data[replaceIndex].block.set(newBlock, 0);
         return this.data[replaceIndex].block;
     }
 

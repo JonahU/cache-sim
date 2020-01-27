@@ -1,5 +1,5 @@
 class DataBlock extends Float64Array {
-    toArray() {
+    copy() {
         return Array.from(this);
     }
 }

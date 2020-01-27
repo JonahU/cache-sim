@@ -42,6 +42,18 @@ class Cache {
         this.sets[setIndex].updateBlock(address, value);
     }
 
+    getContents() {
+        const cacheContents = [];
+        this.sets.forEach(set => {
+            for(let db of set.data) {
+                cacheContents.push({
+                    [db.address.value] : db.block.copy().join()
+                });
+            }
+        });
+        return cacheContents;
+    }
+
     hitsAndMisses() {
         const readHits = this.sets.reduce((accumulator, set) => accumulator + set.readHits, 0);
         const readMisses = this.sets.reduce((accumulator, set) => accumulator + set.readMisses, 0);
