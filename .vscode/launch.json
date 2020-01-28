@@ -56,12 +56,12 @@
         {
             "type": "node",
             "request": "launch",
-            "name": "Simple mxm",
+            "name": "Simple mxm FIFO",
             "skipFiles": [
                 "<node_internals>/**"
             ],
             "program": "${workspaceFolder}/cache-sim.js",
-            "args": ["-a", "mxm", "-d", "3", "-n", "4", "-r", "random", "-p"]
+            "args": ["-a", "mxm", "-d", "3", "-r", "FIFO", "-p"]
         },
         {
             "type": "node",
@@ -96,7 +96,7 @@
         {
             "type": "node",
             "request": "launch",
-            "name": "Daxy small random",
+            "name": "Daxy small random NOT WORKING",
             "skipFiles": [
                 "<node_internals>/**"
             ],

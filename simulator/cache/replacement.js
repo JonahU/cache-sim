@@ -66,22 +66,27 @@ LRUCache.prototype.remove = function(node) {
 
  class FIFO {
     constructor(capacity) {
-        this.queue = new Array(capacity);
+        this.queue = Object.seal(new Array(capacity).fill(null));
         this.firstIn = 0;
+    }
+
+    incrementPtr() {
+        if(this.firstIn === this.queue.length-1) {
+            this.firstIn = -1;
+        }
+        this.firstIn++;
     }
 
     put(tag, replaceIndex) {
         if(replaceIndex) {
             this.queue[replaceIndex] = tag;
-            this.firstIn++;
+            this.incrementPtr();
             return replaceIndex;
         }
         const currentFirstIn = this.firstIn;
-        this.queue[currentFirstIn] = tag;
-        if(this.firstIn === this.queue.length-1) {
-            this.firstIn = -1;
-        }
-        this.firstIn++;
+        this.queue[currentFirstIn] = tag
+
+        this.incrementPtr();
         return currentFirstIn;
     }
  }
