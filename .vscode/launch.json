@@ -21,7 +21,7 @@
                 "<node_internals>/**"
             ],
             "program": "${workspaceFolder}/cache-sim.js",
-            "args": ["-a", "daxpy", "-d", "100", "-n", "1"]
+            "args": ["-a", "daxpy", "-d", "100", "-n", "1", "-p"]
         },
         {
             "type": "node",
@@ -122,6 +122,16 @@
             ],
             "program": "${workspaceFolder}/cache-sim.js",
             "args": ["-a", "daxpy"]
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "MXM fail",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "program": "${workspaceFolder}/cache-sim.js",
+            "args": ["-a", "mxm", "-r", "random"]
         }
     ]
 }

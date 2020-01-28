@@ -118,7 +118,7 @@ LRUCache.prototype.remove = function(node) {
         if (this.associativity === 1) return 0;
         switch(this.policy) {
             case "LRU":
-                // TODO: fix LRU
+                // TODO: fix LRU (crashes in default case)
                 return this.LRU.put(tag);
             case "FIFO":
                 return this.FIFO.put(tag, replaceIndex)

@@ -48,8 +48,7 @@ class Address {
 
     getTag(numSetsCache) {
         if(arguments.length === 0) return this.tag;
-        const indexBinaryLength = Math.log2(numSetsCache);
-        this.tag = this.value >> indexBinaryLength;
+        this.tag = Math.floor(this.value / (this.blockSize/SIZEOF_DOUBLE))%numSetsCache;
         return this.tag;
     }
 
@@ -57,12 +56,13 @@ class Address {
         if(arguments.length === 0) return this.index;
         this.numSets = numSetsCache;
         this.blockSize = blockSize;
-        this.index = this.value % numSetsCache;
-
-        // set offset and tag if not set yet
         if(this.blockOffset === undefined || this.blockOffset === null) {
             this.blockOffset = this.getBlockOffset(blockSize);
         }
+
+        this.blockOffsetBitsCount = Math.log2(blockSize);
+        this.index = (this.value >> this.blockOffsetBitsCount)%numSetsCache;
+
         if(this.tag === undefined || this.tag === null) {
             this.tag = this.getTag(numSetsCache);
         }
