@@ -13,6 +13,7 @@ var LRUCache = function(capacity) {
     this.LRUTable = {};
     this.capacity = capacity;
     this.nodeCount = 0;
+    this.emptyIndex = null;
 };
 
 LRUCache.prototype.get = function(key) {
@@ -22,8 +23,7 @@ LRUCache.prototype.get = function(key) {
     this.add(toReturn);
 };
 
-LRUCache.prototype.put = function(key) {
-    const value = key;
+LRUCache.prototype.put = function(key, value = this.emptyIndex) {
     const node = this.LRUTable[key];
     if(node) {
         const removed = this.remove(node);
@@ -33,6 +33,7 @@ LRUCache.prototype.put = function(key) {
         if (this.nodeCount === this.capacity) {
             const removed = this.remove(this.tail.previous);
             delete this.LRUTable[removed];
+            this.emptyIndex = removed;
             return removed;
             
         }
@@ -118,8 +119,7 @@ LRUCache.prototype.remove = function(node) {
         if (this.associativity === 1) return 0;
         switch(this.policy) {
             case "LRU":
-                // TODO: fix LRU (crashes in default case)
-                return this.LRU.put(tag);
+                return this.LRU.put(tag, replaceIndex);
             case "FIFO":
                 return this.FIFO.put(tag, replaceIndex)
             case "random":

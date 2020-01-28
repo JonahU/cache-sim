@@ -60,8 +60,8 @@ class Address {
             this.blockOffset = this.getBlockOffset(blockSize);
         }
 
-        this.blockOffsetBitsCount = Math.log2(blockSize);
-        this.index = (this.value >> this.blockOffsetBitsCount)%numSetsCache;
+        const blockOffsetBitsCount = Math.log2(blockSize);
+        this.index = (this.value >> blockOffsetBitsCount)%numSetsCache;
 
         if(this.tag === undefined || this.tag === null) {
             this.tag = this.getTag(numSetsCache);

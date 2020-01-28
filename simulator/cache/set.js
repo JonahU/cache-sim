@@ -14,11 +14,11 @@ class CacheSet {
         this.size = blockSize * associativity;
         this.blockSize = blockSize;
         this.associativity = associativity;
-        this.data = Object.seal(new Array(associativity).fill({
+        this.data = Object.seal(new Array(associativity).fill().map(() => ({
             address: new Address({index, blockSize, numSets}), // dummy address
             block: new DataBlock(blockSize/SIZEOF_DOUBLE),
             valid: false,
-        }));
+        })));
         this.replacementPolicy = replacementPolicy;
         this.replacement = new Replacement(associativity, replacementPolicy);
         this.numSets = numSets;
