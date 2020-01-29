@@ -2,7 +2,9 @@ const argv = require("./argv");
 const simulator = require("./simulator");
 
 global.SIZEOF_DOUBLE = 8;
+global.DOUBLE_BITS_LENGTH = 3; // Math.log2(SIZEOF_DOUBLE);
 global.SIZEOF_ADDRESS = 64;
+
 
 const config = argv();
 console.log("======INPUTS======");

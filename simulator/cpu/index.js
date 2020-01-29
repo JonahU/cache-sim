@@ -52,11 +52,8 @@ class Cpu {
     storeDouble(address, value) {
         this.instructionCount ++;
         const newAddress = new Address(address);
-        // console.log("SETTING " + value + " at " + address);
         this.cache.setDouble(newAddress, value);
-        // console.log(this.cache.getContents())
         this.ram.setDouble(newAddress, value);
-        // console.log(this.ram.data);
     }
 
     addDouble(value1, value2) {

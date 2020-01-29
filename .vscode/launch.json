@@ -16,7 +16,7 @@
         {
             "type": "node",
             "request": "launch",
-            "name": "Daxpy",
+            "name": "Daxpy WORKING",
             "skipFiles": [
                 "<node_internals>/**"
             ],
@@ -26,7 +26,7 @@
         {
             "type": "node",
             "request": "launch",
-            "name": "Random Small cache daxpy",
+            "name": "Random Small cache daxpy NOT WORKING",
             "skipFiles": [
                 "<node_internals>/**"
             ],
@@ -96,7 +96,7 @@
         {
             "type": "node",
             "request": "launch",
-            "name": "Daxy small random NOT WORKING",
+            "name": "Daxy small random WORKING",
             "skipFiles": [
                 "<node_internals>/**"
             ],
@@ -116,22 +116,12 @@
         {
             "type": "node",
             "request": "launch",
-            "name": "DAXPY default",
+            "name": "DAXPY default WORKING",
             "skipFiles": [
                 "<node_internals>/**"
             ],
             "program": "${workspaceFolder}/cache-sim.js",
             "args": ["-a", "daxpy"]
-        },
-        {
-            "type": "node",
-            "request": "launch",
-            "name": "MXM fail",
-            "skipFiles": [
-                "<node_internals>/**"
-            ],
-            "program": "${workspaceFolder}/cache-sim.js",
-            "args": ["-a", "mxm", "-r", "LRU", "-d", "100"]
         }
     ]
 }
