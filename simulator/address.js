@@ -4,6 +4,7 @@ class Address {
             this._blockSize = null;
             this._numSets = null;
             this.value = spec;
+            this._rawValue = this.value*8;
         } else {
             this.tag = 0;
             this.index = spec.index;
@@ -12,6 +13,7 @@ class Address {
             this._numSets = spec.numSets;
             this.binary = this._bits();
             this.value = this._value();
+            this._rawValue = this.value*8;
             Object.freeze(this);
         }
     }
@@ -46,14 +48,9 @@ class Address {
         return bits;
     }
 
-    getTag(numSetsCache) {
+    getTag(numSetsCache, blockSize) {
         if(arguments.length === 0) return this.tag;
-        this.tag = Math.floor(this.value / (this._blockSize/SIZEOF_DOUBLE));
-        if(numSetsCache === 1) { // fully associative
-            return this.tag;
-        }
-        // set associative or direct mapped
-        this.tag = this.tag % numSetsCache;
+        this.tag = this._rawValue >> (Math.log2(numSetsCache) + Math.log2(blockSize));
         return this.tag;
     }
 
@@ -61,16 +58,16 @@ class Address {
         if(arguments.length === 0) return this.index;
         this._numSets = numSetsCache;
         this._blockSize = blockSize;
+
+        this.index = (this._rawValue >> Math.log2(blockSize))%numSetsCache;
+        
         if(this.blockOffset === undefined || this.blockOffset === null) {
             this.blockOffset = this.getBlockOffset(blockSize);
         }
-
-        const blockOffsetBitsCount = Math.log2(blockSize/SIZEOF_DOUBLE)*DOUBLE_BITS_LENGTH;
-        this.index = (this.value >> blockOffsetBitsCount)%numSetsCache;
-
         if(this.tag === undefined || this.tag === null) {
-            this.tag = this.getTag(numSetsCache);
+            this.tag = this.getTag(numSetsCache, blockSize);
         }
+
         return this.index;
     }
 
