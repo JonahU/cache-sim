@@ -156,12 +156,42 @@
         {
             "type": "node",
             "request": "launch",
-            "name": "DAXPY fully associative SLOW",
+            "name": "DAXPY fully associative",
             "skipFiles": [
                 "<node_internals>/**"
             ],
             "program": "${workspaceFolder}/cache-sim.js",
             "args": ["-a", "daxpy", "-d", "1000000", "-n", "1024"]
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Replacement policy simple test FIFO",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "program": "${workspaceFolder}/cache-sim.js",
+            "args": ["-d", "2", "-c", "64", "-n", "4", "-b", "8", "-r", "FIFO"]
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Replacement policy simple test LRU",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "program": "${workspaceFolder}/cache-sim.js",
+            "args": ["-d", "2", "-c", "64", "-n", "4", "-b", "8", "-r", "LRU", "-p"]
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Direct map fifo default",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "program": "${workspaceFolder}/cache-sim.js",
+            "args": ["-r", "FIFO", "-n", "1"]
         },
     ]
 }
