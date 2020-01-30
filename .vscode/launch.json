@@ -26,7 +26,7 @@
         {
             "type": "node",
             "request": "launch",
-            "name": "Random Small cache daxpy (assoc 1) PART WORKING",
+            "name": "Random Small cache daxpy (assoc 1) WORKING",
             "skipFiles": [
                 "<node_internals>/**"
             ],
@@ -36,7 +36,7 @@
         {
             "type": "node",
             "request": "launch",
-            "name": "Random Small cache daxpy (assoc 2) NOT WORKING",
+            "name": "Random Small cache daxpy (assoc 2) WORKING",
             "skipFiles": [
                 "<node_internals>/**"
             ],
@@ -46,7 +46,7 @@
         {
             "type": "node",
             "request": "launch",
-            "name": "Random Small cache daxpy (assoc 4) NOT WORKING",
+            "name": "Random Small cache daxpy (assoc 4) WORKING",
             "skipFiles": [
                 "<node_internals>/**"
             ],
@@ -151,7 +151,17 @@
                 "<node_internals>/**"
             ],
             "program": "${workspaceFolder}/cache-sim.js",
-            "args": ["-a", "daxpy"]
-        }
+            "args": ["-a", "daxpy", "-d", "5900"]
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "DAXPY fully associative SLOW",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "program": "${workspaceFolder}/cache-sim.js",
+            "args": ["-a", "daxpy", "-d", "1000000", "-n", "1024"]
+        },
     ]
 }
