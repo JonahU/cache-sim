@@ -16,7 +16,7 @@ var LRUCache = function(capacity) {
 };
 
 LRUCache.prototype.get = function(key) {
-    if (this.LRUTable[key] === undefined) throw new Error(`LRU key "${key}" not found in\n${this.LRUTable}`);
+    if (this.LRUTable[key] === undefined) throw new Error(`LRU key "${key}" not found`);
     const willBeRead = this.LRUTable[key];
     this.remove(willBeRead);
     this.add(willBeRead);
@@ -116,6 +116,7 @@ LRUCache.prototype.remove = function(node) {
 
     dataWillBeRead(tag) {
         if(this.policy === "LRU") {
+            if(this.associativity === 1) return;
             this.LRU.get(tag);
         }
     }
