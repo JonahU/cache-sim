@@ -25,6 +25,9 @@ const run = myCpu => {
                 }
             }
         }
+        if (process.env.DEBUG==="progress-bar") {
+            console.info(`${Math.floor(100*(jj/dimension))}%`);
+        }
     }
 };
 

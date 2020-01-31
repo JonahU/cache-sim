@@ -20,6 +20,12 @@ const run = myCpu => {
             }
             myCpu.storeDouble(solutionAddress, register1);
         }
+
+        if (process.env.DEBUG==="progress-bar") {
+            if (i%10 === 0) {
+                console.info(`${Math.floor(100*(i/dimension))}%`);
+            }
+        }
     }
 };
 

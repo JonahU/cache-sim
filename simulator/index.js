@@ -18,11 +18,17 @@ const simulator = config => {
         // stop timer and calculate time taken
         const endTime = Date.now();
         const totalTime = new Date(endTime - startTime);
+        const hours = totalTime.getUTCHours();
         const minutes = totalTime.getUTCMinutes();
         const seconds = totalTime.getUTCSeconds();
-        const timeTaken = minutes > 0 ?
-            `${minutes}m, ${seconds}s` :
-            `${seconds}s`;
+        let timeTaken;
+        if(hours) {
+            timeTaken =`${hours}h, ${minutes}m, ${seconds}s`;
+        } else if (minutes) {
+            timeTaken =`${minutes}m, ${seconds}s`;
+        } else {
+            timeTaken = `${seconds}s`;
+        }
         return {
             instructionCount: myCpu.instructionCount,
             ...myCache.hitsAndMisses(),
