@@ -17,4 +17,4 @@
 ## Known issues
 * The initial dummy addresses that populate the cache on startup are meaningless and confusing, and probably should be removed (see the else block in the Address class constructor)
 * "valid bit" (isValid flag in the CacheSet class) is stored on the cache set object not the address
-* Based off of other students' differing results I believe there may be a slight issue with the way my addresses are being calculated, however, I am not sure what that issue is
+* Based off of discusions with other students' about results (particularly set-associativity 2 in section 2.2 of the write-up) I believe there may be an issue with the way my addresses are being calculated, however, I am not sure what that issue is
