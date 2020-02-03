@@ -193,5 +193,49 @@
             "program": "${workspaceFolder}/cache-sim.js",
             "args": ["-r", "FIFO", "-n", "1"]
         },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "2.5 q2 512x512 blocked",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "env": { "DEBUG": "progress-bar" },
+            "program": "${workspaceFolder}/cache-sim.js",
+            "args": ["-d", "512"]
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "2.5 q2 512x512 reg",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "env": { "DEBUG": "progress-bar" },
+            "program": "${workspaceFolder}/cache-sim.js",
+            "args": ["-d", "512", "-a", "mxm"]
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "2.5 q1 480x480 reg",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "env": { "DEBUG": "progress-bar" },
+            "program": "${workspaceFolder}/cache-sim.js",
+            "args": ["-d", "480", "-a","mxm"]
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "2.5 q1 488x488 reg",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "env": { "DEBUG": "progress-bar" },
+            "program": "${workspaceFolder}/cache-sim.js",
+            "args": ["-d", "488", "-a","mxm"]
+        },
     ]
 }
